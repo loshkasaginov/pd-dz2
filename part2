@@ -1,0 +1,20 @@
+import pandas as pd
+
+keywords = pd.read_csv('keywords.csv')
+
+geo_data = {
+    'Центр': ['москва', 'тула', 'ярославль'],
+    'Северо-Запад': ['петербург', 'псков', 'мурманск'],
+    'Дальний Восток': ['владивосток', 'сахалин', 'хабаровск']
+}
+
+def geo_classification(row):
+    for key, value in geo_data.items():
+        for city in value:
+            if city in row['keyword']:
+                return key
+    return 'undefined'
+
+keywords['region'] = keywords.apply(geo_classification, axis=1)
+
+
