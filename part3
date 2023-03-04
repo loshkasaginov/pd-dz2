@@ -1,0 +1,20 @@
+import pandas as pd
+
+movies = pd.read_csv('movies.csv')
+ratings = pd.read_csv('ratings.csv')
+
+years = list(range(1950, 2011))
+
+def production_year(title):
+    for year in years:
+        if str(year) in title:
+            return year
+    return 1900
+
+movies['year'] = movies['title'].apply(production_year)
+
+movies_ratings = pd.merge(movies, ratings, on='movieId')
+
+mean_ratings = movies_ratings.groupby('year').mean()['rating'].sort_values(ascending=False)
+
+print(mean_ratings)
