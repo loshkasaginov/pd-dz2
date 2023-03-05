@@ -1,15 +1,11 @@
 import pandas as pd
 
 def classify_movies(df):
-    # создаем новый столбец "class"
     df['class'] = pd.cut(df['rating'], bins=[0, 2, 4, 5], labels=['низкий', 'средний', 'высокий'])
     return df
 
-# загружаем данные из файла
 movies = pd.read_csv('movies.csv')
 
-# классифицируем фильмы
 classified_movies = classify_movies(movies)
 
-# выводим результаты
 print(classified_movies.head())
